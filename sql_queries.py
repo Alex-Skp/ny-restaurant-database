@@ -17,7 +17,8 @@ CREATE TABNLE IF NOT EXISTS staging_trips(
 
     datetime        DATETIME    NOT NULL    SORTKEY,
     latitude        DECIMAL     NOT NULL,
-    longitude       DECIMAL     NOT NULL    
+    longitude       DECIMAL     NOT NULL,    
+    base            VARCHAR         
 );
 """
 
