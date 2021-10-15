@@ -1,0 +1,21 @@
+{
+    "jsonpaths": [
+        "$['businesses']['id']",    
+        "$['businesses']['name']",     
+        "$['businesses']['image_url']",     
+        "$['businesses']['url']",     
+        "$['businesses']['review_count']",     
+        "$['businesses']['coordinates']['latitude']",    
+        "$['businesses']['coordubates']['longitude]",   
+        "$['businesses']['price']",     
+        "$['businesses']['location']['address1']",
+        "$['businesses']['location']['address2']",
+        "$['businesses']['location']['address3']",
+        "$['businesses']['location']['city']",
+        "$['businesses']['location']['zip_code']",
+        "$['businesses']['location']['country']",
+        "$['businesses']['location']['state']",
+        "$['businesses']['phone']",
+        "$['businesses']['categories']"
+    ]
+}
