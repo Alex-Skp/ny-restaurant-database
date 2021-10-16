@@ -9,6 +9,11 @@ config.read('./credentials/dwh.cfg')
 
 staging_trips_table_drop = "DROP TABLE IF EXISTS staging_events;"
 staging_restaurants_table_drop = "DROP TABLE IF EXISTS staging_songs;"
+address_table_drop = "DROP TABLE IF EXISTS address;"
+restaurant_table_drop = "DROP TABLE IF EXISTS restaurant;"
+quadrant_table_drop = "DROP TABLE IF EXISTS quadrant;"
+pickup_table_drop = "DROP TABLE IF EXISTS pickup;"
+time_table_drop = "DROP TABLE IF EXISTS time;"
 
 # CREATE TABLES
 
@@ -28,8 +33,8 @@ CREATE TABLE IF NOT EXISTS staging_restaurants(
     image_url       VARCHAR,
     yelp_url        VARCHAR,
     review_count    INTEGER,
-    latitude        DECIMAL     NOT NULL    SORTKEY,
-    longitude       DECIMAL     NOT NULL    SORTKEY,
+    latitude        DECIMAL     NOT NULL,
+    longitude       DECIMAL     NOT NULL,
     price           VARCHAR,
     address1        VARCHAR,
     address2        VARCHAR,
@@ -44,7 +49,7 @@ CREATE TABLE IF NOT EXISTS staging_restaurants(
 
 address_table_create = """
 CREATE TABLE IF NOT EXISTS address_table(  
-    address_id      SERIAL      PRIMARY KEY SORTKEY,
+    address_id      INT IDENTITY(0,1)       PRIMARY KEY,
     address1        VARCHAR     NOT NULL,
     address2        VARCHAR,
     address3        VARCHAR,
@@ -85,7 +90,7 @@ CREATE TABLE IF NOT EXISTS pickup_table_create(
     datetime        DATETIME    SORTKEY,
     latitude        DECIMAL     NOT NULL,
     longitude       DECIMAL     NOT NULL,
-    quadrant_id     VARCHAR     NOT NULL
+    quadrant_id     VARCHAR     NOT NULL,
     station         VARCHAR
 );
 """
@@ -100,3 +105,6 @@ CREATE TABLE IF NOT EXISTS time_table(
     weekday         INTEGER     NOT NULL
 );
 """
+
+drop_table_queries = [staging_trips_table_drop, staging_restaurants_table_drop, address_table_drop, restaurant_table_drop, quadrant_table_drop, time_table_drop]
+create_table_queries = [staging_trips_table_create, staging_restaurants_table_create, address_table_create, restaurant_table_create, quadrant_table_create, time_table_create]
