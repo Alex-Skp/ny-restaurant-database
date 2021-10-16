@@ -1,0 +1,20 @@
+{
+    "jsonpaths": [
+        "$['id']",    
+        "$['name']",     
+        "$['image_url']",     
+        "$['url']",     
+        "$['review_count']",     
+        "$['coordinates']['latitude']",    
+        "$['coordinates']['longitude']",   
+        "$['price']",     
+        "$['location']['address1']",
+        "$['location']['address2']",
+        "$['location']['address3']",
+        "$['location']['city']",
+        "$['location']['zip_code']",
+        "$['location']['country']",
+        "$['location']['state']",
+        "$['phone']"
+    ]
+}
