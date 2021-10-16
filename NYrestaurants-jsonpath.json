@@ -15,7 +15,6 @@
         "$['businesses']['location']['zip_code']",
         "$['businesses']['location']['country']",
         "$['businesses']['location']['state']",
-        "$['businesses']['phone']",
-        "$['businesses']['categories']"
+        "$['businesses']['phone']"
     ]
 }
