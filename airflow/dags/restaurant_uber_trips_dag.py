@@ -3,7 +3,7 @@ import os
 from airflow import DAG
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators import (StageToRedshiftOperator, LoadFactOperator,
-                                LoadDimensionOperator, DataQualityOperator)
+                               LoadDimensionOperator, DataQualityOperator)
 from helpers import SqlQueries
 
 default_args = {
@@ -15,7 +15,6 @@ default_args = {
     'email_on_retry': False,
     'Catchup': True,
     'depends_on_past': False
-    
 }
 
 dag = DAG('uber_restaurant_trips_dag',
@@ -23,7 +22,7 @@ dag = DAG('uber_restaurant_trips_dag',
           description='loading data and restaurant data into redshift',
           schedule_interval='@daily',
           max_active_runs=1
-        )
+          )
 
 start_operator = DummyOperator(task_id='Begin_execution',  dag=dag)
 
@@ -33,7 +32,9 @@ stage_trips_to_redshift = StageToRedshiftOperator(
     redshift_conn_id="redshift",
     aws_conn_id="aws_credentials",
     table="staging_trips",
-    s3_bucket="s3://alexskp-capstone/bucket_data/uber-data/{execution_date.year}/{execution_date.month}/{execution_date.day}",
+    s3_bucket=("s3://alexskp-capstone/bucket_data/uber-data/"
+               "{execution_date.year}/{execution_date.month}/"
+               "{execution_date.day}"),
     region="us-west-2",
     extra_params="""
         csv
@@ -73,10 +74,13 @@ run_staging_quality_checks = DataQualityOperator(
     task_id='Run_staging_quality_checks',
     dag=dag,
     redshift_conn_id="redshift",
-    tests = [
-        {'test': "SELECT COUNT (*) FROM staging_trips WHERE datetime IS NULL", 'exp_result': 0},
-        {'test': "SELECT COUNT (*) FROM staging_restaurants WHERE id IS NULL", 'exp_result': 0},
-        {'test': "SELECT COUNT (*) FROM quadrant_table WHERE quadrant_id IS NULL", 'exp_result': 0}
+    tests=[
+        {'test': "SELECT COUNT (*) FROM staging_trips WHERE datetime IS NULL",
+         'exp_result': 0},
+        {'test': "SELECT COUNT (*) FROM staging_restaurants WHERE id IS NULL",
+         'exp_result': 0},
+        {'test': "SELECT COUNT (*) FROM quadrant_table WHERE quadrant_id IS NULL",
+         'exp_result': 0}
     ]
 )
 
@@ -121,11 +125,15 @@ run_load_quality_checks = DataQualityOperator(
     task_id='Run_load_quality_checks',
     dag=dag,
     redshift_conn_id="redshift",
-    tests = [
-        {'test': "SELECT COUNT (*) FROM address_table WHERE address1 IS NULL", 'exp_result': 0},
-        {'test': "SELECT COUNT (*) FROM restaurant_table WHERE restaurant_id IS NULL", 'exp_result': 0},
-        {'test': "SELECT COUNT (*) FROM pickup_table WHERE datetime IS NULL", 'exp_result': 0},
-        {'test': "SELECT COUNT (*) FROM time_table WHERE datetime IS NULL", 'exp_result': 0}
+    tests=[
+        {'test': "SELECT COUNT (*) FROM address_table WHERE address1 IS NULL",
+         'exp_result': 0},
+        {'test': "SELECT COUNT (*) FROM restaurant_table WHERE restaurant_id IS NULL",
+         'exp_result': 0},
+        {'test': "SELECT COUNT (*) FROM pickup_table WHERE datetime IS NULL",
+         'exp_result': 0},
+        {'test': "SELECT COUNT (*) FROM time_table WHERE datetime IS NULL",
+         'exp_result': 0}
     ]
 )
 

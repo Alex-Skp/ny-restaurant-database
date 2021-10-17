@@ -1,12 +1,9 @@
 import configparser
-
-
 # CONFIG
 config = configparser.ConfigParser()
 config.read('./credentials/dwh.cfg')
 
 # DROP TABLES
-
 staging_trips_table_drop = "DROP TABLE IF EXISTS staging_trips;"
 staging_restaurants_table_drop = "DROP TABLE IF EXISTS staging_restaurants;"
 address_table_drop = "DROP TABLE IF EXISTS address_table;"
@@ -16,13 +13,12 @@ pickup_table_drop = "DROP TABLE IF EXISTS pickup_table;"
 time_table_drop = "DROP TABLE IF EXISTS time_table;"
 
 # CREATE TABLES
-
 staging_trips_table_create = """
 CREATE TABLE IF NOT EXISTS staging_trips(
     datetime        DATETIME    NOT NULL    SORTKEY,
     latitude        NUMERIC(7,4)     NOT NULL,
-    longitude       NUMERIC(7,4)     NOT NULL,    
-    base            VARCHAR         
+    longitude       NUMERIC(7,4)     NOT NULL,
+    base            VARCHAR
 );
 """
 
@@ -44,11 +40,11 @@ CREATE TABLE IF NOT EXISTS staging_restaurants(
     country         VARCHAR,
     state           VARCHAR,
     phone           VARCHAR
-); 
+);
 """
 
 address_table_create = """
-CREATE TABLE IF NOT EXISTS address_table(  
+CREATE TABLE IF NOT EXISTS address_table(
     address_id      INT IDENTITY NOT NULL,
     address1        VARCHAR     NOT NULL,
     address2        VARCHAR,
@@ -72,7 +68,7 @@ CREATE TABLE IF NOT EXISTS restaurant_table(
     price           VARCHAR,
     address_id      INTEGER     NOT NULL,
     phone           VARCHAR,
-    quadrant_id     VARCHAR     
+    quadrant_id     VARCHAR
 );
 """
 
@@ -85,6 +81,7 @@ CREATE TABLE IF NOT EXISTS quadrant_table(
     lon_to          NUMERIC(7,4)     NOT NULL
 );
 """
+
 pickup_table_create = """
 CREATE TABLE IF NOT EXISTS pickup_table(
     datetime        DATETIME    SORTKEY,
@@ -94,6 +91,7 @@ CREATE TABLE IF NOT EXISTS pickup_table(
     base            VARCHAR
 );
 """
+
 time_table_create = """
 CREATE TABLE IF NOT EXISTS time_table(
     datetime        DATETIME    PRIMARY KEY SORTKEY,
@@ -106,17 +104,17 @@ CREATE TABLE IF NOT EXISTS time_table(
 );
 """
 
-drop_table_queries = [staging_trips_table_drop, 
-                        staging_restaurants_table_drop,     
-                        address_table_drop, 
-                        restaurant_table_drop, 
-                        quadrant_table_drop, 
-                        pickup_table_drop,
-                        time_table_drop]
-create_table_queries = [staging_trips_table_create, 
-                        staging_restaurants_table_create, 
-                        address_table_create, 
-                        restaurant_table_create, 
-                        quadrant_table_create, 
-                        pickup_table_create, 
+drop_table_queries = [staging_trips_table_drop,
+                      staging_restaurants_table_drop,
+                      address_table_drop,
+                      restaurant_table_drop,
+                      quadrant_table_drop,
+                      pickup_table_drop,
+                      time_table_drop]
+create_table_queries = [staging_trips_table_create,
+                        staging_restaurants_table_create,
+                        address_table_create,
+                        restaurant_table_create,
+                        quadrant_table_create,
+                        pickup_table_create,
                         time_table_create]

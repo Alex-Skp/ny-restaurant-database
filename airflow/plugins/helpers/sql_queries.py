@@ -17,34 +17,34 @@ class SqlQueries:
         , name                                      AS name
         , image_url                                 AS image_url
         , yelp_url                                  AS yelp_url
-        , review_count                              AS review_count 
+        , review_count                              AS review_count
         , latitude                                  AS latitude
         , longitude                                 AS longitude
         , price                                     AS price
-        , ( SELECT at.address_id 
-            FROM address_table AS at 
-            WHERE sr.address1=at.address1 
-            AND sr.zip_code=at.zip_code 
-            ORDER BY at.address_id 
+        , ( SELECT at.address_id
+            FROM address_table AS at
+            WHERE sr.address1=at.address1
+            AND sr.zip_code=at.zip_code
+            ORDER BY at.address_id
             LIMIT 1)                                AS address_id
         , phone                                     AS phone
-        , ( SELECT qt.quadrant_id 
-            FROM quadrant_table AS qt 
+        , ( SELECT qt.quadrant_id
+            FROM quadrant_table AS qt
             WHERE sr.latitude BETWEEN qt.lat_from AND qt.lat_to
             AND sr.longitude BETWEEN qt.lon_from AND qt.lon_to
             LIMIT 1)                                AS quadrant_id
         FROM staging_restaurants AS sr
         WHERE sr.id IS NOT NULL
-        AND sr.address1 IS NOT NULL 
-    
+        AND sr.address1 IS NOT NULL
+
     """)
 
     pickup_table_insert = ("""
         SELECT DISTINCT datetime                AS datetime
         , latitude                              AS latitude
         , longitude                             AS longitude
-        , ( SELECT qt.quadrant_id 
-            FROM quadrant_table AS qt 
+        , ( SELECT qt.quadrant_id
+            FROM quadrant_table AS qt
             WHERE st.latitude BETWEEN qt.lat_from AND qt.lat_to
             AND st.longitude BETWEEN qt.lon_from AND qt.lon_to
             LIMIT 1)                            AS quadrant_id
