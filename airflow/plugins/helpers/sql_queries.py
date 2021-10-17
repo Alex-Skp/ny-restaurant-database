@@ -1,5 +1,5 @@
 class SqlQueries:
-    
+
     address_table_insert = ("""
         SELECT DISTINCT address1 AS address1
         , address2 AS address2
@@ -9,6 +9,7 @@ class SqlQueries:
         , country AS country
         , state AS state
         FROM staging_restaurants
+        WHERE address1 IS NOT NULL
     """)
 
     restaurant_table_insert = ("""
@@ -29,10 +30,13 @@ class SqlQueries:
         , phone                                     AS phone
         , ( SELECT qt.quadrant_id 
             FROM quadrant_table AS qt 
-            WHERE (sr.latitude BETWEEN qt.lat_from AND qt.lat_to)
-            AND (sr.longitude BETWEEN qt.lon_from AND qt.lon_to)
-            ORDER BY qt.quadrant_id DESC LIMIT 1)   AS quadrant_id
+            WHERE sr.latitude BETWEEN qt.lat_from AND qt.lat_to
+            AND sr.longitude BETWEEN qt.lon_from AND qt.lon_to
+            LIMIT 1)                                AS quadrant_id
         FROM staging_restaurants AS sr
+        WHERE sr.id IS NOT NULL
+        AND sr.address1 IS NOT NULL 
+    
     """)
 
     pickup_table_insert = ("""
@@ -41,11 +45,12 @@ class SqlQueries:
         , longitude                             AS longitude
         , ( SELECT qt.quadrant_id 
             FROM quadrant_table AS qt 
-            WHERE (st.latitude BETWEEN qt.lat_from AND qt.lat_to)
-            AND (st.longitude BETWEEN qt.lon_from AND qt.lon_to)
-            ORDER BY quadrant_id DESC LIMIT 1)  AS quadrant_id
-        , station                               AS station
+            WHERE st.latitude BETWEEN qt.lat_from AND qt.lat_to
+            AND st.longitude BETWEEN qt.lon_from AND qt.lon_to
+            LIMIT 1)                            AS quadrant_id
+        , base                                  AS base
         FROM staging_trips AS st
+        WHERE datetime IS NOT NULL
     """)
 
     time_table_insert = ("""

@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS restaurant_table(
     price           VARCHAR,
     address_id      INTEGER     NOT NULL,
     phone           VARCHAR,
-    quadrant_id     VARCHAR     NOT NULL
+    quadrant_id     VARCHAR     
 );
 """
 
@@ -90,8 +90,8 @@ CREATE TABLE IF NOT EXISTS pickup_table(
     datetime        DATETIME    SORTKEY,
     latitude        NUMERIC(7,4)     NOT NULL,
     longitude       NUMERIC(7,4)     NOT NULL,
-    quadrant_id     VARCHAR     NOT NULL,
-    station         VARCHAR
+    quadrant_id     VARCHAR,
+    base            VARCHAR
 );
 """
 time_table_create = """
