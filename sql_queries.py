@@ -7,21 +7,21 @@ config.read('./credentials/dwh.cfg')
 
 # DROP TABLES
 
-staging_trips_table_drop = "DROP TABLE IF EXISTS staging_events;"
-staging_restaurants_table_drop = "DROP TABLE IF EXISTS staging_songs;"
-address_table_drop = "DROP TABLE IF EXISTS address;"
-restaurant_table_drop = "DROP TABLE IF EXISTS restaurant;"
-quadrant_table_drop = "DROP TABLE IF EXISTS quadrant;"
-pickup_table_drop = "DROP TABLE IF EXISTS pickup;"
-time_table_drop = "DROP TABLE IF EXISTS time;"
+staging_trips_table_drop = "DROP TABLE IF EXISTS staging_trips;"
+staging_restaurants_table_drop = "DROP TABLE IF EXISTS staging_restaurants;"
+address_table_drop = "DROP TABLE IF EXISTS address_table;"
+restaurant_table_drop = "DROP TABLE IF EXISTS restaurant_table;"
+quadrant_table_drop = "DROP TABLE IF EXISTS quadrant_table;"
+pickup_table_drop = "DROP TABLE IF EXISTS pickup_table;"
+time_table_drop = "DROP TABLE IF EXISTS time_table;"
 
 # CREATE TABLES
 
 staging_trips_table_create = """
 CREATE TABLE IF NOT EXISTS staging_trips(
     datetime        DATETIME    NOT NULL    SORTKEY,
-    latitude        DECIMAL     NOT NULL,
-    longitude       DECIMAL     NOT NULL,    
+    latitude        NUMERIC(7,4)     NOT NULL,
+    longitude       NUMERIC(7,4)     NOT NULL,    
     base            VARCHAR         
 );
 """
@@ -33,8 +33,8 @@ CREATE TABLE IF NOT EXISTS staging_restaurants(
     image_url       VARCHAR,
     yelp_url        VARCHAR,
     review_count    INTEGER,
-    latitude        DECIMAL     NOT NULL,
-    longitude       DECIMAL     NOT NULL,
+    latitude        NUMERIC(7,4)     NOT NULL,
+    longitude       NUMERIC(7,4)     NOT NULL,
     price           VARCHAR,
     address1        VARCHAR,
     address2        VARCHAR,
@@ -67,8 +67,8 @@ CREATE TABLE IF NOT EXISTS restaurant_table(
     image_url       VARCHAR,
     yelp_url        VARCHAR,
     review_count    INTEGER,
-    latitude        DECIMAL     NOT NULL,
-    longitude       DECIMAL     NOT NULL,
+    latitude        NUMERIC(7,4)     NOT NULL,
+    longitude       NUMERIC(7,4)     NOT NULL,
     price           VARCHAR,
     address_id      INTEGER     NOT NULL,
     phone           VARCHAR,
@@ -79,17 +79,17 @@ CREATE TABLE IF NOT EXISTS restaurant_table(
 quadrant_table_create = """
 CREATE TABLE IF NOT EXISTS quadrant_table(
     quadrant_id     VARCHAR     PRIMARY KEY SORTKEY,
-    lat_from        DECIMAL     NOT NULL,
-    lat_to          DECIMAL     NOT NULL,
-    lon_from        DECIMAL     NOT NULL,
-    lon_to          DECIMAL     NOT NULL
+    lat_from        NUMERIC(7,4)     NOT NULL,
+    lat_to          NUMERIC(7,4)     NOT NULL,
+    lon_from        NUMERIC(7,4)     NOT NULL,
+    lon_to          NUMERIC(7,4)     NOT NULL
 );
 """
 pickup_table_create = """
 CREATE TABLE IF NOT EXISTS pickup_table_create(
     datetime        DATETIME    SORTKEY,
-    latitude        DECIMAL     NOT NULL,
-    longitude       DECIMAL     NOT NULL,
+    latitude        NUMERIC(7,4)     NOT NULL,
+    longitude       NUMERIC(7,4)     NOT NULL,
     quadrant_id     VARCHAR     NOT NULL,
     station         VARCHAR
 );
