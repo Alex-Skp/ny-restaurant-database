@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS staging_restaurants(
 
 address_table_create = """
 CREATE TABLE IF NOT EXISTS address_table(  
-    address_id      INT IDENTITY(0,1)       PRIMARY KEY,
+    address_id      INT IDENTITY NOT NULL,
     address1        VARCHAR     NOT NULL,
     address2        VARCHAR,
     address3        VARCHAR,
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS quadrant_table(
 );
 """
 pickup_table_create = """
-CREATE TABLE IF NOT EXISTS pickup_table_create(
+CREATE TABLE IF NOT EXISTS pickup_table(
     datetime        DATETIME    SORTKEY,
     latitude        NUMERIC(7,4)     NOT NULL,
     longitude       NUMERIC(7,4)     NOT NULL,
@@ -106,5 +106,17 @@ CREATE TABLE IF NOT EXISTS time_table(
 );
 """
 
-drop_table_queries = [staging_trips_table_drop, staging_restaurants_table_drop, address_table_drop, restaurant_table_drop, quadrant_table_drop, time_table_drop]
-create_table_queries = [staging_trips_table_create, staging_restaurants_table_create, address_table_create, restaurant_table_create, quadrant_table_create, time_table_create]
+drop_table_queries = [staging_trips_table_drop, 
+                        staging_restaurants_table_drop,     
+                        address_table_drop, 
+                        restaurant_table_drop, 
+                        quadrant_table_drop, 
+                        pickup_table_drop,
+                        time_table_drop]
+create_table_queries = [staging_trips_table_create, 
+                        staging_restaurants_table_create, 
+                        address_table_create, 
+                        restaurant_table_create, 
+                        quadrant_table_create, 
+                        pickup_table_create, 
+                        time_table_create]
