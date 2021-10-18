@@ -8,11 +8,10 @@ In order to achieve this, we combined two sources of data: Restaurant data from 
 
 ## Methodology
 ### Finding our data
-* We first need to retrieve our data. We started by the uber dataset. You can download it  [here](https://www.kaggle.com/fivethirtyeight/uber-pickups-in-new-york-city?search=uber&select=uber-raw-data-aug14.csv)
-* To create the union we will create a virual grid that spans from 40,85N to 40,7N and from -74,02 to -74,73
-in splits of aprox the size of 4 blocks (2x2) in lattitude/longitude: 0,0012 lat & 0,0042 lon
-We will use the south end and the east end as axis so we will do lat-40,7 and then divided 0,0012, rounded to the next .1 and will generate some more rounded "coordinates" to link our data points to common grids.  
- 1 example block 40.785885-40,784711 aprox 0,0012° height -73.957148-73,952920 aprox 0,0042 width 
+* We first need to retrieve our data. We started by the uber dataset. You can download it  [here](https://www.kaggle.com/fivethirtyeight/uber-pickups-in-new-york-city?search=uber&select=uber-raw-data-aug14.csv).
+We focused only in the csvs of 2014. Data spans from april to September. We wanted data that follows a continuous timeline to simulate how our ETL process would feed from data retrieved in previous steps. After downloading, we followed the steps described in [split_data.ipynb](https://github.com/Alex-Skp/udacity-capstone-project/blob/main/split_data.ipynb)
+* To make the grid table we created a table with grids that cover all our uber traffic data. Some of the restaurants happened to be in the peripheric areas of the city but we won't be interested in analyzing those. We defined a function in [functions.py](https://github.com/Alex-Skp/udacity-capstone-project/blob/main/functions.py) to loop and calculate the grids, as well as generating an quadrant ID for each one. running [generate_coord_grid.py](https://github.com/Alex-Skp/udacity-capstone-project/blob/main/generate_coord_grid.py) would create this grid table and save it as a csv locally.
+* For the NY restaurants 
 * Describe the steps of the process for the project
 * Describe the tools, technology and data model
 	* Explain the schemas here 
@@ -40,6 +39,3 @@ Other:
 !['cluster-diagram'](cluster-diagram.jpeg)
 
 
-
-
-https://www.kaggle.com/fivethirtyeight/uber-pickups-in-new-york-city?search=uber&select=uber-raw-data-aug14.csv
